@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>{{ object.quiz.name }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="content" class="container">
+    {% if object.question != none %}
+        <p>Question: {{ object.question.question }}</p>
+    {% else %}
+        {% if object.round != none %}
+            <p>Round: {{ object.round.name }}</p>
+        {% else %}
+            <p>Quiz: {{ object.quiz.name }}</p>
+        {% endif %}
+    {% endif %}
+</div>
+
+</body>
+</html>

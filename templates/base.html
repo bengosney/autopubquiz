@@ -1,0 +1,24 @@
+{% load static %}
+<html>
+<head>
+    <title>Django Builder - autoquiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div id="content" class="container">
+    <h2>Home: <a href="#">autoquiz</a></h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Your Apps</h5>
+            <p class="card-text">{% block content %}{% endblock %}</p>
+        </div>
+    </div>
+</div>
+<div>
+    <pre>sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="v4l2loopback" exclusive_caps=1</pre>
+    <pre>sudo modprobe -r v4l2loopback</pre>
+</div>
+
+</body>
+</html>

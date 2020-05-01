@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'quiz_quiz_list' %}">
+    Quiz Listing
+    </a>
+</p>
+    
+<form method="post">
+{% csrf_token %}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="last_updated">last_updated: </label>
+  <input class="form-control col-sm-10" id="last_updated" type="date" name="last_updated" value="{{ object.last_updated }}" disabled>
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="name">name: </label>
+  <input class="form-control col-sm-10" id="name" type="text" name="name" value="{{ object.name }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="slug">slug: </label>
+  <input class="form-control col-sm-10" id="slug" type="text" name="slug" value="{{ object.slug }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="created">created: </label>
+  <input class="form-control col-sm-10" id="created" type="date" name="created" value="{{ object.created }}" disabled>
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="opentb_session_key">opentb_session_key: </label>
+  <input class="form-control col-sm-10" id="opentb_session_key" type="text" name="opentb_session_key" value="{{ object.opentb_session_key }}">
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

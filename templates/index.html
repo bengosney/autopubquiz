@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="m-2"><h4>quiz</h4></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_teamanswer_list' %}">TeamAnswer Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_quiz_list' %}">Quiz Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_team_list' %}">Team Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_answer_list' %}">Answer Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_round_list' %}">Round Listing</a></div>
+<div class="m-2"><a class="btn btn-light" href="{% url 'quiz_question_list' %}">Question Listing</a></div>
+{% endblock %}

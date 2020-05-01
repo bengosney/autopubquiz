@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    
+<p>
+    <a class="btn btn-light" href="{% url 'quiz_question_list' %}">
+    Question Listing
+    </a>
+</p>
+    
+<form method="post">
+{% csrf_token %}
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="question">question: </label>
+  <input class="form-control col-sm-10" id="question" type="text" name="question" value="{{ object.question }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="last_updated">last_updated: </label>
+  <input class="form-control col-sm-10" id="last_updated" type="date" name="last_updated" value="{{ object.last_updated }}" disabled>
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="position">position: </label>
+  <input class="form-control col-sm-10" id="position" type="number" name="position" value="{{ object.position }}">
+  </div>
+  <div class="form-group row">
+  <label class="col-sm-2 col-form-label" for="created">created: </label>
+  <input class="form-control col-sm-10" id="created" type="date" name="created" value="{{ object.created }}" disabled>
+  </div>
+  <input type="submit" value="Save" class="btn btn-primary">
+</form>
+
+{% endblock %}

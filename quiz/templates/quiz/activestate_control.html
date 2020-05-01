@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <h1>Controls for {{ object.quiz.name }}</h1>
+    <ol>
+        {% for round in object.quiz.round_set.all %}
+            <li>
+                <a href="?round={{ round.id }}">{{ round.name }}</a>
+                <ol>
+                    {% for question in round.question_set.all %}
+                        <li>
+                            <a href="?question={{ question.id }}">{{ question.question }}</a>
+                            <ul>
+                                {% for answer in question.answer_set.all %}
+                                    <li>
+                                        <span>{{ answer.answer }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+        {% endfor % %}
+    </ol>
+{% endblock %}
