@@ -1,21 +1,33 @@
+{% load static %}
 <html>
 <head>
     <title>{{ object.quiz.name }}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static "css/styles.css" %}"/>
+
 </head>
 <body>
 
-<div id="content" class="container">
-    {% if object.question != none %}
-        <p>Question: {{ object.question.question }}</p>
-    {% else %}
-        {% if object.round != none %}
-            <p>Round: {{ object.round.name }}</p>
+<div id="content" class="container" style="background-image: url('{{ background.src.large }}')">
+    <div class="wrapper">
+        {% if object.question != none %}
+            <div class="question">
+                <div class="question_title">{{ object.question.question }}</div>
+                <div class="answers">
+                    <ul>
+                        {% for answer in object.question.answer_set.all %}
+                            <li>{{ answer.answer }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         {% else %}
-            <p>Quiz: {{ object.quiz.name }}</p>
+            {% if object.round != none %}
+                <div class="round">Next Round: {{ object.round.name }}</div>
+            {% else %}
+                <div class="quiz">Quiz: {{ object.quiz.name }}</div>
+            {% endif %}
         {% endif %}
-    {% endif %}
+    </div>
 </div>
 
 </body>
