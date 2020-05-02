@@ -3,7 +3,7 @@
 <head>
     <title>{{ object.quiz.name }}</title>
     <link rel="stylesheet" href="{% static "css/styles.css" %}"/>
-
+    <script src="{% static "js/trianglify.min.js" %}"></script>
 </head>
 <body>
 
@@ -15,20 +15,62 @@
                 <div class="answers">
                     <ul>
                         {% for answer in object.question.answer_set.all %}
-                            <li>{{ answer.answer }}</li>
+                            <li class="
+
+                                    {% if object.answers %}{{ answer.correct|yesno:'correct,incorrect' }}{% endif %}">{{ answer.answer }}</li>
                         {% endfor %}
                     </ul>
                 </div>
             </div>
+            <script>
+                window.seed = {{ object.question.id }};
+                window.x_color = "{{ object.round.x_color }}";
+                window.y_color = "{{ object.round.y_color }}";
+            </script>
         {% else %}
             {% if object.round != none %}
                 <div class="round">Next Round: {{ object.round.name }}</div>
+                <script>
+                    window.seed = {{ object.round.id }};
+                    window.x_color = "{{ object.round.x_color }}";
+                    window.y_color = "{{ object.round.y_color }}";
+                </script>
             {% else %}
-                <div class="quiz">Quiz: {{ object.quiz.name }}</div>
+                <div class="quiz">
+                    <div class="title">{{ object.quiz.name }}</div>
+                    {% if object.answers %}
+                        <div class="subtitle">The answers</div>
+                    {% endif %}
+                    <script>window.seed = {{ object.quiz.id }}</script>
+                </div>
             {% endif %}
         {% endif %}
     </div>
 </div>
+<script>
+    const drawBackground = () => {
+        const clsName = 'background';
+        const elements = document.getElementsByClassName(clsName);
+        while (elements.length > 0) {
+            elements[0].parentNode.removeChild(elements[0]);
+        }
 
+        const args = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+            seed: window.seed,
+            x_colors: window.x_color || 'random',
+            y_colors: window.y_color || 'random',
+        };
+
+        const pattern = Trianglify(args);
+        const node = pattern.svg();
+        node.classList.add(clsName);
+        document.body.appendChild(node);
+    }
+
+    window.onresize = drawBackground;
+    drawBackground();
+</script>
 </body>
 </html>

@@ -160,6 +160,9 @@ class ActiveQuizControl(generic.DetailView):
     def get(self, request, *args, **kwargs):
         active = self.get_object()
 
+        if 'answers' in request.GET:
+            active.answers = True if request.GET['answers'] == 'true' else False
+
         if 'clear' in request.GET:
             active.round = None
             active.question = None
@@ -173,7 +176,6 @@ class ActiveQuizControl(generic.DetailView):
             question_object = models.Question.objects.get(pk=request.GET['question'])
             active.question = question_object
             active.round = question_object.round
-            active.save()
 
         active.save()
 

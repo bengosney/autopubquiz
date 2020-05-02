@@ -147,6 +147,34 @@ class Round(models.Model):
         (32, "Entertainment: Cartoon & Animations"),
     ]
 
+    COLOURS = {
+        0: {'x_color': 'BuGn', 'y_color': 'YlOrRd'},
+        9: {'x_color': 'BuPu', 'y_color': 'BuGn'},
+        10: {'x_color': 'GnBu', 'y_color': 'BuPu'},
+        11: {'x_color': 'OrRd', 'y_color': 'GnBu'},
+        12: {'x_color': 'PuBuGn', 'y_color': 'OrRd'},
+        13: {'x_color': 'PuBu', 'y_color': 'PuBuGn'},
+        14: {'x_color': 'PuRd', 'y_color': 'PuBu'},
+        15: {'x_color': 'RdPu', 'y_color': 'PuRd'},
+        16: {'x_color': 'YlGnBu', 'y_color': 'RdPu'},
+        17: {'x_color': 'YlGn', 'y_color': 'YlGnBu'},
+        18: {'x_color': 'YlOrBr', 'y_color': 'YlGn'},
+        19: {'x_color': 'YlOrRd', 'y_color': 'YlOrBr'},
+        20: {'x_color': 'BuGn', 'y_color': 'YlOrRd'},
+        21: {'x_color': 'BuPu', 'y_color': 'BuGn'},
+        22: {'x_color': 'GnBu', 'y_color': 'BuPu'},
+        23: {'x_color': 'OrRd', 'y_color': 'GnBu'},
+        24: {'x_color': 'PuBuGn', 'y_color': 'OrRd'},
+        25: {'x_color': 'PuBu', 'y_color': 'PuBuGn'},
+        26: {'x_color': 'PuRd', 'y_color': 'PuBu'},
+        27: {'x_color': 'RdPu', 'y_color': 'PuRd'},
+        28: {'x_color': 'YlGnBu', 'y_color': 'RdPu'},
+        29: {'x_color': 'YlGn', 'y_color': 'YlGnBu'},
+        30: {'x_color': 'YlOrBr', 'y_color': 'YlGn'},
+        31: {'x_color': 'YlOrRd', 'y_color': 'YlOrBr'},
+        32: {'x_color': 'BuGn', 'y_color': 'YlOrRd'},
+    }
+
     ANY_DIFFICULTY = None
     EASY_DIFFICULTY = 'easy'
     MEDIUM_DIFFICULTY = 'medium'
@@ -198,15 +226,12 @@ class Round(models.Model):
             }
             response = requests.get('https://opentdb.com/api.php', params=args)
             response.raise_for_status()
-            jsonResponse = response.json()
-            print("adding more questions")
+            json_response = response.json()
 
-            for q in jsonResponse['results']:
+            for q in json_response['results']:
                 question = Question()
                 question.round = self
                 question.question = urllib.parse.unquote(q['question'])
-                if q['type'] == "boolean":
-                    question.question = f"True or false, {question.question}"
                 question.save()
 
                 answers = []
@@ -221,9 +246,23 @@ class Round(models.Model):
                     answer.answer = urllib.parse.unquote(a)
                     answers.append(answer)
 
-                random.shuffle(answers)
+                if q['type'] != "boolean":
+                    random.shuffle(answers)
+
                 for a in answers:
                     a.save()
+
+    @property
+    def x_color(self):
+        return self.COLOURS[self.category]['x_color']
+
+    @property
+    def y_color(self):
+        return self.COLOURS[self.category]['y_color']
+
+    @property
+    def anchor(self):
+        return f"{self.__class__.__name__}-{self.id}"
 
 
 class Question(models.Model):
@@ -250,11 +289,16 @@ class Question(models.Model):
     def get_update_url(self):
         return reverse("quiz_question_update", args=(self.pk,))
 
+    @property
+    def anchor(self):
+        return f"{self.__class__.__name__}-{self.id}"
+
 
 class ActiveState(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
     round = models.ForeignKey(Round, on_delete=models.CASCADE, blank=True, null=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, blank=True, null=True)
+    answers = models.BooleanField(default=False)
     slug = models.SlugField()
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
@@ -268,10 +312,28 @@ class ActiveState(models.Model):
         return f"{self.quiz.name} - {self.created}"
 
     def get_absolute_url(self):
-        return reverse("quiz_active_state_details", args=(self.slug,))
+        anchor = ''
+
+        if self.round is not None:
+            anchor = f"#{self.round.anchor}"
+
+        if self.question is not None:
+            anchor = f"#{self.question.anchor}"
+
+        url = reverse("quiz_active_state_details", args=(self.slug,))
+        print(f"{url}{anchor}")
+        return f"{url}{anchor}"
 
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = slugify(f"{self.quiz.name} {time.time()}")
 
         return super().save(*args, **kwargs)
+
+    @property
+    def current_round_id(self):
+        return self.round.id
+
+    @property
+    def current_question_id(self):
+        return self.question.id

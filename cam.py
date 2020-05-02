@@ -1,17 +1,10 @@
 import asyncio
 from asyncio import sleep
 from pprint import pprint
-
 from pyppeteer import launch
-
 import pyfakewebcam
-import numpy as np
 from numpy import asarray
-
-from PIL import Image, ImageOps
-from PIL import ImageFont
-from PIL import ImageDraw
-from pyppeteer.errors import NetworkError
+from PIL import Image
 
 working = True
 
@@ -22,7 +15,7 @@ async def screenshot():
     while working:
         try:
             print("Screenshot")
-            await page.goto('http://127.0.0.1:8000/active/sunday-quiz-15883998427516189/')
+            await page.goto('http://127.0.0.1:8000/active/sunday-quiz-15883998427516189/', {'timeout': 15000})
             await page.screenshot({'path': 'screen.jpg', 'width': '800', 'height': '600'})
         except Exception as e:
             pprint(e)

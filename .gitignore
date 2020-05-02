@@ -414,3 +414,5 @@ fabric.properties
 *.scss.map
 
 # End of https://www.gitignore.io/api/node,sass,emacs,django,python,pycharm
+
+screen.jpg

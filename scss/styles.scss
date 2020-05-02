@@ -3,15 +3,22 @@ html, body {
   margin: 0;
   height: 100%;
   width: 100%;
+  font-size: 4vw;
   font-family: -apple-system, blinkmacsystemfont, "Segoe UI", helvetica, arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-weight: 400;
   line-height: 1.5em;
-  letter-spacing: .005em;
-  font-size: 4vw;
+  letter-spacing: .015em;
   color: #121212;
-  text-shadow: 0px 0px .1em #fff;
 }
 
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
 
 .container {
   display: flex;
@@ -29,6 +36,27 @@ html, body {
   background: rgba(255, 255, 255, .5);
 }
 
-.question {
+.answers {
+  .correct {
+    &:after {
+      content: " \2714";
+    }
+  }
 
+  .incorrect {
+    opacity: .2;
+  }
+}
+
+.quiz {
+  text-align: center;
+
+  .title {
+    font-size: 3em;
+    line-height: 1em;
+  }
+
+  .subtitle {
+    padding-top: 1em;
+  }
 }
