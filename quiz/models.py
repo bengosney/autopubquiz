@@ -44,9 +44,8 @@ class Quiz(models.Model):
             }
             response = requests.get('https://opentdb.com/api_token.php', params=args)
             response.raise_for_status()
-            jsonResponse = response.json()
-            pprint(jsonResponse)
-            self.opentdb_session_key = jsonResponse['token']
+            json_response = response.json()
+            self.opentdb_session_key = json_response['token']
 
         super().save(*args, **kwargs)
 

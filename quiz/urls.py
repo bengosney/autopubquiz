@@ -26,6 +26,7 @@ urlpatterns = (
     path("start/<slug:slug>/", views.QuizStartView.as_view(), name="quiz_quiz_start"),
     path("active/<slug:slug>/", views.ActiveQuiz.as_view(), name="quiz_active_state_details"),
     path("active/<slug:slug>/control/", views.ActiveQuizControl.as_view(), name="quiz_active_state_control"),
+    path("active/<slug:slug>/speech/", views.ActiveQuizSpeech, name="quiz_active_state_speech"),
     path("team/", views.TeamListView.as_view(), name="quiz_team_list"),
     path("team/create/", views.TeamCreateView.as_view(), name="quiz_team_create"),
     path("team/detail/<int:pk>/", views.TeamDetailView.as_view(), name="quiz_team_detail"),

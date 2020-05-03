@@ -4,7 +4,6 @@ from . import models
 
 
 class TeamAnswerSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.TeamAnswer
         fields = [
@@ -12,8 +11,8 @@ class TeamAnswerSerializer(serializers.ModelSerializer):
             "created",
         ]
 
-class QuizSerializer(serializers.ModelSerializer):
 
+class QuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Quiz
         fields = [
@@ -24,8 +23,8 @@ class QuizSerializer(serializers.ModelSerializer):
             "opentb_session_key",
         ]
 
-class TeamSerializer(serializers.ModelSerializer):
 
+class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Team
         fields = [
@@ -34,8 +33,8 @@ class TeamSerializer(serializers.ModelSerializer):
             "name",
         ]
 
-class AnswerSerializer(serializers.ModelSerializer):
 
+class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Answer
         fields = [
@@ -45,8 +44,8 @@ class AnswerSerializer(serializers.ModelSerializer):
             "created",
         ]
 
-class RoundSerializer(serializers.ModelSerializer):
 
+class RoundSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Round
         fields = [
@@ -56,8 +55,8 @@ class RoundSerializer(serializers.ModelSerializer):
             "position",
         ]
 
-class QuestionSerializer(serializers.ModelSerializer):
 
+class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Question
         fields = [

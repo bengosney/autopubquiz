@@ -1,8 +1,5 @@
-from functools import lru_cache
-
-import requests
-from django.utils.datastructures import MultiValueDictKeyError
 from django.views import generic
+from django.http import JsonResponse
 
 from . import models
 from . import forms
@@ -180,3 +177,21 @@ class ActiveQuizControl(generic.DetailView):
         active.save()
 
         return super().get(request, *args, **kwargs)
+
+
+def ActiveQuizSpeech(request, slug):
+    active = models.ActiveState.objects.get(slug=slug)
+    speech = active.quiz.name
+
+    if active.round is not None:
+        speech = active.round.name
+
+    if active.question is not None:
+        answers = " ".join([f"{a.answer}." for a in active.question.answer_set.all() if a.correct or not active.answers])
+        speech = f"{active.question.question} {answers}"
+
+    data = {
+        'speech': speech,
+    }
+
+    return JsonResponse(data)

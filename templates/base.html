@@ -17,8 +17,22 @@
     </div>
 </div>
 <div>
-    <pre>sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="v4l2loopback" exclusive_caps=1</pre>
-    <pre>sudo modprobe -r v4l2loopback</pre>
+    <div>
+        <p>Add video loop back</p>
+        <pre>sudo modprobe v4l2loopback devices=1 video_nr=20 card_label="v4l2loopback" exclusive_caps=1</pre>
+    </div>
+    <div>
+        <p>Remove video loop back</p>
+        <pre>sudo modprobe -r v4l2loopback</pre>
+    </div>
+    <div>
+        <p>Add video loop back</p>
+        <pre>sudo modprobe snd-aloop</pre>
+    </div>
+    <div>
+        <p>Remove video loop back</p>
+        <pre>sudo modprobe -r snd-aloop</pre>
+    </div>
 </div>
 
 </body>
