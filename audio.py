@@ -46,7 +46,13 @@ async def speak():
 
             if not os.path.exists(full_path):
                 print("Fetching speech")
-                response = polly_client.synthesize_speech(VoiceId='Emma', OutputFormat='mp3', Text=speech)
+                print(speech)
+                response = polly_client.synthesize_speech(
+                    VoiceId='Emma',
+                    OutputFormat='mp3',
+                    Text=speech,
+                    Engine='neural'
+                )
 
                 with open(full_path, 'wb') as file:
                     file.write(response['AudioStream'].read())
