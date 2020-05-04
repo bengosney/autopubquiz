@@ -48,6 +48,11 @@ class Quiz(models.Model):
             self.opentdb_session_key = json_response['token']
 
         super().save(*args, **kwargs)
+        self.populateQuestions()
+
+    def populateQuestions(self):
+        for round_object in self.round_set.all():
+            round_object.populateQuestions()
 
 
 class TeamAnswer(models.Model):
