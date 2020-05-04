@@ -211,9 +211,9 @@ class Round(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.populateQuestion()
+        self.populateQuestions()
 
-    def populateQuestion(self):
+    def populateQuestions(self):
         needed_count = self.question_count - self.question_set.count()
         if needed_count > 0:
             args = {
