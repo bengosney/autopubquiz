@@ -14,7 +14,7 @@ class Quiz(models.Model):
     last_updated = models.DateTimeField(auto_now=True, editable=False)
     slug = models.SlugField()
     created = models.DateTimeField(auto_now_add=True, editable=False)
-    opentdb_session_key = models.CharField(max_length=255)
+    opentdb_session_key = models.CharField(max_length=255, default="NONE")
 
     class Meta:
         pass
@@ -221,7 +221,7 @@ class Round(models.Model):
                 'category': self.category,
                 'difficulty': self.difficulty,
                 'encode': 'url3986',
-                'token': self.quiz.opentdb_session_key,
+                # 'token': self.quiz.opentdb_session_key,
             }
             response = requests.get('https://opentdb.com/api.php', params=args)
             response.raise_for_status()
