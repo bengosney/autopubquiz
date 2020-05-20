@@ -1,4 +1,5 @@
 import time
+from functools import total_ordering
 from pprint import pprint
 import random
 import requests
@@ -99,6 +100,7 @@ class Team(models.Model):
         return reverse("quiz_team_update", args=(self.pk,))
 
 
+@total_ordering
 class Answer(models.Model):
     # Relationships
     question = models.ForeignKey("quiz.question", on_delete=models.CASCADE)
@@ -113,13 +115,19 @@ class Answer(models.Model):
         pass
 
     def __str__(self):
-        return str(self.pk)
+        return str(self.answer)
 
     def get_absolute_url(self):
         return reverse("quiz_answer_detail", args=(self.pk,))
 
     def get_update_url(self):
         return reverse("quiz_answer_update", args=(self.pk,))
+
+    def __eq__(self, other):
+        return f"{self}" == f"{other}"
+
+    def __lt__(self, other):
+        return f"{self}" < f"{other}"
 
 
 class Round(models.Model):
@@ -231,12 +239,14 @@ class Round(models.Model):
             response = requests.get('https://opentdb.com/api.php', params=args)
             response.raise_for_status()
             json_response = response.json()
+            pprint(json_response)
 
             for q in json_response['results']:
                 question = Question()
                 question.round = self
                 question.question = urllib.parse.unquote(q['question'])
                 question.save()
+                pprint(question)
 
                 answers = []
                 answer = Answer()
@@ -251,6 +261,8 @@ class Round(models.Model):
                     answers.append(answer)
 
                 if q['type'] != "boolean":
+                    answers = sorted(answers)
+                else:
                     random.shuffle(answers)
 
                 for a in answers:
@@ -341,3 +353,7 @@ class ActiveState(models.Model):
     @property
     def current_question_id(self):
         return self.question.id
+
+    @property
+    def control_url(self):
+        return reverse("quiz_active_state_control", args=(self.slug,))

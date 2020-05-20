@@ -17,7 +17,9 @@
                 <div class="answers">
                     <ul>
                         {% for answer in object.question.answer_set.all %}
-                            <li class="{% if object.answers %}{{ answer.correct|yesno:'correct,incorrect' }}{% endif %}">{{ answer.answer }}</li>
+                            <li class="
+
+                                    {% if object.answers %}{{ answer.correct|yesno:'correct,incorrect' }}{% endif %}">{{ answer.answer }}</li>
                         {% endfor %}
                     </ul>
                 </div>

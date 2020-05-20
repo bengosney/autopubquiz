@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+<style>
+  .answer {
+  visibility: hidden;
+  }
+  .question:hover .answer {
+  visibility: visible;
+  }
+ 
+</style>
     <p>
         <a class="btn btn-light" href="{% url 'quiz_quiz_list' %}">
             Quiz Listing
@@ -21,16 +30,16 @@
             <td>{{ object.name }}</td>
         </tr>
         <tr>
-            <td>slug</td>
-            <td>{{ object.slug }}</td>
-        </tr>
-        <tr>
             <td>created</td>
             <td>{{ object.created }}</td>
         </tr>
         <tr>
-            <td>opentb_session_key</td>
-            <td>{{ object.opentb_session_key }}</td>
+            <td>Active States</td>
+            <td>
+                {% for activeState in object.activestate_set.all %}
+                <div><a href="{{ activeState.control_url }}">{{ activeState }}</a></div>
+                {% endfor %}
+            </td>
         </tr>
         <tr>
             <td colspan="2">
@@ -40,11 +49,11 @@
                             <div>{{ round.name }}</div>
                             <ol>
                                 {% for question in round.question_set.all %}
-                                    <li>
+                                    <li class="question">
                                         <div>{{ question.question }}</div>
                                         <ul>
                                             {% for answer in question.answer_set.all %}
-                                                <li>{{ answer.answer }}{% if answer.correct %} &#x2714;{% endif %}</li>
+                                                <li>{{ answer.answer }}<span class="answer">{% if answer.correct %} &#x2714;{% endif %}</span></li>
                                             {% endfor %}
                                         </ul>
                                     </li>

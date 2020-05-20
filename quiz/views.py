@@ -143,7 +143,7 @@ class QuizStartView(generic.RedirectView):
         running = models.ActiveState(quiz=quiz)
         running.save()
 
-        return running.get_absolute_url()
+        return running.control_url
 
 
 class ActiveQuiz(generic.DetailView):
@@ -184,7 +184,7 @@ def ActiveQuizSpeech(request, slug):
     speech = active.quiz.name
 
     if active.round is not None:
-        speech = active.round.name
+        speech = f"Next round: {active.round.name}"
 
     if active.question is not None:
         answers = " ".join([f"{a.answer}." for a in active.question.answer_set.all() if a.correct or not active.answers])
