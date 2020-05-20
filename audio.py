@@ -24,9 +24,6 @@ async def speak():
         aws_secret_access_key=conf['aws']['secret_access_key'],
         region_name='eu-west-1').client('polly')
 
-    #    aws_access_key_id='***REMOVED***',
-    #    aws_secret_access_key='***REMOVED***',
-
     speech_dir = os.path.join(os.path.dirname(__file__), "speech_data")
     if not os.path.exists(speech_dir):
         os.mkdir(speech_dir)
