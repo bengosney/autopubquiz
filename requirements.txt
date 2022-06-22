@@ -13,7 +13,7 @@ docutils==0.15.2
 idna==2.9
 jmespath==0.9.5
 log3==0.1.7
-numpy==1.18.3
+numpy==1.22.0
 opencv-python==4.2.0.34
 Pillow==7.1.2
 pyee==7.0.1
